@@ -14,6 +14,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  static const darkBlue = Color(0xFF0D47A1);
+
   int _currentIndex = 0;
   bool _useBottomAppBarMode = false;
 
@@ -33,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
             Expanded(child: Text(message)),
           ],
         ),
-        backgroundColor: Colors.blue.shade800,
+        backgroundColor: darkBlue,
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
         action: SnackBarAction(
@@ -46,10 +48,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _handleFabAction() async {
-    // Show SnackBar with custom message as required by practice task 5
-    _showFabSnackBar('FloatingActionButton Pressed! Opening Quick Action Task Return Demo...');
+    _showFabSnackBar('FloatingActionButton Pressed! Opening Select Task Screen...');
 
-    // Trigger task selection return data workflow
     final result = await Navigator.push<String>(
       context,
       MaterialPageRoute(builder: (context) => const SelectTaskScreen()),
@@ -62,12 +62,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Screen bodies for BottomNavigationBar / Tabs
     final List<Widget> screens = [
       HomeDashboardScreen(onNavigateTab: _onTabSelected),
       const TasksScreen(),
       const RemindersScreen(),
-      const ProfileScreen(),
+      const ProfileScreen(isHeroDestination: false),
     ];
 
     final List<String> titles = [
@@ -78,12 +77,12 @@ class _MainScreenState extends State<MainScreen> {
     ];
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: _currentIndex == 1
-          // TasksScreen has its own TabBar AppBar
           ? null
           : AppBar(
               title: Text(titles[_currentIndex]),
-              backgroundColor: Colors.blue.shade700,
+              backgroundColor: darkBlue,
               foregroundColor: Colors.white,
               actions: [
                 IconButton(
@@ -108,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.settings),
-                  tooltip: 'Settings (Named Route)',
+                  tooltip: 'Settings',
                   onPressed: () {
                     Navigator.pushNamed(context, '/settings');
                   },
@@ -121,12 +120,12 @@ class _MainScreenState extends State<MainScreen> {
         children: screens,
       ),
 
-      // FloatingActionButton for BottomAppBar or Dashboard
       floatingActionButton: FloatingActionButton(
         heroTag: 'main-fab-plus',
         onPressed: _handleFabAction,
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: darkBlue,
         foregroundColor: Colors.white,
+        elevation: 2,
         tooltip: 'Quick Add / Select Task (FAB)',
         child: const Icon(Icons.add, size: 28),
       ),
@@ -134,13 +133,11 @@ class _MainScreenState extends State<MainScreen> {
           ? FloatingActionButtonLocation.centerDocked
           : FloatingActionButtonLocation.endFloat,
 
-      // Navigation Bar options: BottomNavigationBar or Custom BottomAppBar
       bottomNavigationBar: _useBottomAppBarMode
-          // Feature 6: BottomAppBar with Home, Search, Favorite icons and FAB notch
           ? BottomAppBar(
               shape: const CircularNotchedRectangle(),
               notchMargin: 8.0,
-              color: Colors.blue.shade700,
+              color: darkBlue,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -149,24 +146,21 @@ class _MainScreenState extends State<MainScreen> {
                     tooltip: 'Home',
                     onPressed: () {
                       _onTabSelected(0);
-                      _showFabSnackBar('BottomAppBar: Navigated to Home');
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.search, color: Colors.white),
-                    tooltip: 'Search Tasks',
+                    tooltip: 'Tasks',
                     onPressed: () {
                       _onTabSelected(1);
-                      _showFabSnackBar('BottomAppBar: Search / Tasks opened');
                     },
                   ),
-                  const SizedBox(width: 40), // Spacer for center FloatingActionButton
+                  const SizedBox(width: 40),
                   IconButton(
                     icon: const Icon(Icons.favorite, color: Colors.white),
-                    tooltip: 'Favorites / Reminders',
+                    tooltip: 'Reminders',
                     onPressed: () {
                       _onTabSelected(2);
-                      _showFabSnackBar('BottomAppBar: Favorites / Reminders opened');
                     },
                   ),
                   IconButton(
@@ -174,21 +168,19 @@ class _MainScreenState extends State<MainScreen> {
                     tooltip: 'Profile',
                     onPressed: () {
                       _onTabSelected(3);
-                      _showFabSnackBar('BottomAppBar: Profile opened');
                     },
                   ),
                 ],
               ),
             )
-          // Feature 5: BottomNavigationBar with four tabs: Home, Tasks, Reminders, Profile
           : BottomNavigationBar(
               currentIndex: _currentIndex,
               onTap: _onTabSelected,
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: Colors.blue.shade700,
+              selectedItemColor: darkBlue,
               unselectedItemColor: Colors.grey.shade600,
               backgroundColor: Colors.white,
-              elevation: 8,
+              elevation: 4,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home_outlined),

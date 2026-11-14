@@ -2,11 +2,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:student_hub/main.dart';
 
 void main() {
-  testWidgets('Student Hub app renders main dashboard', (WidgetTester tester) async {
+  testWidgets('Student Hub renders splash screen and navigates to home screen',
+      (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const StudentHubApp());
 
-    // Verify that Student Hub welcome message or title is present.
-    expect(find.textContaining('Student Hub'), findsWidgets);
+    // Verify splash screen renders initially
+    expect(find.text('Student Hub'), findsWidgets);
+
+    // Advance time by 3 seconds to complete splash screen timer and navigation
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
+    // Verify that Student Hub home screen is displayed
+    expect(find.text('Student Hub - Home'), findsOneWidget);
   });
 }

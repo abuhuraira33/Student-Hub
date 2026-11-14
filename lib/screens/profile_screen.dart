@@ -2,11 +2,33 @@ import 'package:flutter/material.dart';
 import '../models/student.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final bool isHeroDestination;
+
+  const ProfileScreen({
+    super.key,
+    this.isHeroDestination = true,
+  });
 
   @override
   Widget build(BuildContext context) {
     const student = Student.currentStudent;
+
+    Widget avatarChild = Container(
+      padding: const EdgeInsets.all(4),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      child: const CircleAvatar(
+        radius: 55,
+        backgroundColor: Colors.blueAccent,
+        child: Icon(
+          Icons.person,
+          size: 65,
+          color: Colors.white,
+        ),
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -44,25 +66,12 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 30, top: 10),
               child: Column(
                 children: [
-                  Hero(
-                    tag: 'student-profile-avatar',
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const CircleAvatar(
-                        radius: 55,
-                        backgroundColor: Colors.blueAccent,
-                        child: Icon(
-                          Icons.person,
-                          size: 65,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  isHeroDestination
+                      ? Hero(
+                          tag: 'student-profile-avatar',
+                          child: avatarChild,
+                        )
+                      : avatarChild,
                   const SizedBox(height: 12),
                   Text(
                     student.name,
@@ -168,8 +177,10 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        // Navigator.pop returns back
-                        Navigator.pop(context);
+                        // Navigator.pop returns back if can pop
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
                       },
                       icon: const Icon(Icons.arrow_back),
                       label: const Text(

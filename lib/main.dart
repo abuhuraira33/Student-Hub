@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/main_screen.dart';
+import 'screens/splash_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/list_screen.dart';
 import 'screens/about_screen.dart';
-import 'screens/contact_screen.dart';
-import 'screens/help_screen.dart';
-import 'screens/settings_screen.dart';
-import 'screens/select_task_screen.dart';
-import 'screens/profile_screen.dart';
 
 void main() {
   runApp(const StudentHubApp());
@@ -14,48 +11,47 @@ void main() {
 class StudentHubApp extends StatelessWidget {
   const StudentHubApp({super.key});
 
+  static const Color darkBlue = Color(0xFF0D47A1);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Student Hub',
       debugShowCheckedModeBanner: false,
 
-      // App Theme: Blue & White color scheme
+      // Simple theme: White background & Dark Blue AppBar
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          primary: Colors.blue.shade700,
-          secondary: Colors.blue.shade500,
+          seedColor: darkBlue,
+          primary: darkBlue,
           surface: Colors.white,
         ),
-        scaffoldBackgroundColor: const Color(0xFFFAFAFA),
-        appBarTheme: AppBarTheme(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
           elevation: 0,
           centerTitle: false,
-          backgroundColor: Colors.blue.shade700,
+          backgroundColor: darkBlue,
           foregroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.white),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         cardTheme: CardThemeData(
-          color: Colors.white,
-          elevation: 2,
+          color: Colors.grey.shade100,
+          elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            side: BorderSide(color: Colors.grey.shade300),
           ),
         ),
       ),
 
-      // 3. Named Routes configuration
-      initialRoute: '/',
+      // Routes configuration starting with SplashScreen
+      initialRoute: '/splash',
       routes: {
-        '/': (context) => const MainScreen(),
+        '/splash': (context) => const SplashScreen(),
+        '/': (context) => const HomeScreen(),
+        '/list': (context) => const ListScreen(),
         '/about': (context) => const AboutScreen(),
-        '/contact': (context) => const ContactScreen(),
-        '/help': (context) => const HelpScreen(),
-        '/settings': (context) => const SettingsScreen(),
-        '/select-task': (context) => const SelectTaskScreen(),
-        '/profile': (context) => const ProfileScreen(),
       },
     );
   }

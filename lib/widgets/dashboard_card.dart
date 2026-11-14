@@ -4,7 +4,6 @@ class DashboardCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
-  final Color iconBackgroundColor;
   final VoidCallback onTap;
 
   const DashboardCard({
@@ -12,35 +11,38 @@ class DashboardCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.icon,
-    required this.iconBackgroundColor,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    const darkBlue = Color(0xFF0D47A1);
+
     return Card(
-      elevation: 2,
-      shadowColor: Colors.blue.withValues(alpha: 0.1),
+      elevation: 0,
+      color: Colors.grey.shade100,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade300),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(14),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: iconBackgroundColor.withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: Icon(
                   icon,
-                  color: iconBackgroundColor,
-                  size: 26,
+                  color: darkBlue,
+                  size: 24,
                 ),
               ),
               const SizedBox(width: 14),
@@ -51,7 +53,7 @@ class DashboardCard extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
@@ -61,7 +63,7 @@ class DashboardCard extends StatelessWidget {
                       subtitle,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey.shade600,
+                        color: Colors.grey.shade700,
                       ),
                     ),
                   ],
@@ -69,7 +71,7 @@ class DashboardCard extends StatelessWidget {
               ),
               Icon(
                 Icons.chevron_right,
-                color: Colors.grey.shade400,
+                color: Colors.grey.shade600,
               ),
             ],
           ),

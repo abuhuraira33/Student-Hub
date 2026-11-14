@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/student.dart';
-import '../screens/profile_screen.dart';
+import '../screens/home_screen.dart';
+import '../screens/list_screen.dart';
+import '../screens/about_screen.dart';
 
+// Navigation Drawer Menu widget
 class AppDrawer extends StatelessWidget {
   final Function(int)? onSelectTab;
 
@@ -10,154 +12,107 @@ class AppDrawer extends StatelessWidget {
     this.onSelectTab,
   });
 
+  static const Color darkBlue = Color(0xFF0D47A1);
+
   @override
   Widget build(BuildContext context) {
-    const student = Student.currentStudent;
-
     return Drawer(
       child: Column(
         children: [
-          UserAccountsDrawerHeader(
+          // Drawer Header with student info
+          const UserAccountsDrawerHeader(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blue.shade800, Colors.blue.shade600],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: darkBlue,
             ),
             accountName: Text(
-              student.name,
-              style: const TextStyle(
+              'Alex Morgan',
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
             ),
-            accountEmail: Text(student.email),
-            currentAccountPicture: GestureDetector(
-              onTap: () {
-                Navigator.pop(context); // Close drawer first
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProfileScreen()),
-                );
-              },
-              child: Hero(
-                tag: 'student-profile-avatar-drawer',
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Text(
-                    student.name.isNotEmpty ? student.name[0] : 'S',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade700,
-                    ),
-                  ),
+            accountEmail: Text('alex.morgan@student.edu'),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text(
+                'A',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: darkBlue,
                 ),
               ),
             ),
           ),
+          // Drawer Navigation Options
           Expanded(
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
+                // 1. Home Screen Option
                 ListTile(
-                  leading: const Icon(Icons.dashboard_outlined, color: Colors.blue),
-                  title: const Text('Home Dashboard'),
-                  subtitle: const Text('Overview & quick actions'),
+                  leading: const Icon(Icons.home, color: darkBlue),
+                  title: const Text('Home Screen'),
+                  subtitle: const Text('Main Student Hub Dashboard'),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pop(context); // Close Drawer
                     if (onSelectTab != null) {
                       onSelectTab!(0);
-                    }
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.task_alt_outlined, color: Colors.blue),
-                  title: const Text('Tasks Management'),
-                  subtitle: const Text('TabBar & TabBarView'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    if (onSelectTab != null) {
-                      onSelectTab!(1);
-                    }
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.notifications_none_outlined, color: Colors.blue),
-                  title: const Text('Reminders'),
-                  subtitle: const Text('Study schedules'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    if (onSelectTab != null) {
-                      onSelectTab!(2);
-                    }
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.person_outline, color: Colors.blue),
-                  title: const Text('Student Profile'),
-                  subtitle: const Text('Hero animation destination'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    if (onSelectTab != null) {
-                      onSelectTab!(3);
                     } else {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                        MaterialPageRoute(builder: (context) => const HomeScreen()),
                       );
                     }
                   },
                 ),
                 const Divider(),
+
+                // 2. List Screen Option (ListView)
                 ListTile(
-                  leading: const Icon(Icons.settings_outlined, color: Colors.blueGrey),
-                  title: const Text('Settings'),
-                  subtitle: const Text('Named Route (/settings)'),
+                  leading: const Icon(Icons.location_city, color: darkBlue),
+                  title: const Text('List Screen (ListView)'),
+                  subtitle: const Text('Display 10+ City Items'),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/settings');
+                    Navigator.pop(context); // Close Drawer
+                    if (onSelectTab != null) {
+                      onSelectTab!(1);
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ListScreen()),
+                      );
+                    }
                   },
                 ),
+                const Divider(),
+
+                // 3. About Screen Option (GridView)
                 ListTile(
-                  leading: const Icon(Icons.help_outline, color: Colors.blueGrey),
-                  title: const Text('Help & FAQ'),
-                  subtitle: const Text('Named Route (/help)'),
+                  leading: const Icon(Icons.grid_view, color: darkBlue),
+                  title: const Text('About Screen (GridView)'),
+                  subtitle: const Text('Display 6 Campus Cards in 2 Columns'),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/help');
+                    Navigator.pop(context); // Close Drawer
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AboutScreen()),
+                    );
                   },
                 ),
-                ListTile(
-                  leading: const Icon(Icons.contact_support_outlined, color: Colors.blueGrey),
-                  title: const Text('Contact Support'),
-                  subtitle: const Text('Named Route (/contact)'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/contact');
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.info_outline, color: Colors.blueGrey),
-                  title: const Text('About Student Hub'),
-                  subtitle: const Text('Named Route (/about)'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/about');
-                  },
-                ),
+                const Divider(),
               ],
             ),
           ),
+          // Footer
           Container(
             padding: const EdgeInsets.all(16),
             alignment: Alignment.center,
             child: Text(
-              'Student Hub v1.0.0 • Flutter Navigation',
+              'Student Hub • Assignment #2',
               style: TextStyle(
-                fontSize: 11,
-                color: Colors.grey.shade500,
+                fontSize: 12,
+                color: Colors.grey.shade600,
               ),
             ),
           ),

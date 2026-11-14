@@ -1,199 +1,157 @@
 import 'package:flutter/material.dart';
+import '../widgets/app_drawer.dart';
 
+// About Screen - Displays exactly 6 items in a 2-column GridView
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
+
+  static const Color darkBlue = Color(0xFF0D47A1);
+
+  // Exactly 6 grid items with icons and captions
+  final List<Map<String, dynamic>> _gridItems = const [
+    {
+      'icon': Icons.school,
+      'title': 'Student Hub',
+      'caption': 'Central Campus Portal',
+    },
+    {
+      'icon': Icons.local_library,
+      'title': 'Library Access',
+      'caption': 'Digital Books & Study Pods',
+    },
+    {
+      'icon': Icons.event_note,
+      'title': 'Exam Schedule',
+      'caption': 'Timetables & Quiz Dates',
+    },
+    {
+      'icon': Icons.map,
+      'title': 'Campus Map',
+      'caption': 'Building & Room Directions',
+    },
+    {
+      'icon': Icons.contact_support,
+      'title': 'Student Support',
+      'caption': 'Academic Counseling & Help',
+    },
+    {
+      'icon': Icons.book,
+      'title': 'Course Catalog',
+      'caption': 'Syllabus & Degree Paths',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      // AppBar with Dark Blue theme
       appBar: AppBar(
-        title: const Text('About Student Hub'),
-        backgroundColor: Colors.blue.shade700,
+        title: const Text('About Screen GridView'),
+        backgroundColor: darkBlue,
         foregroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
+      // Drawer Navigation
+      drawer: const AppDrawer(),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade100,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.school_rounded,
-                      size: 60,
-                      color: Colors.blue.shade800,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Student Hub',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade900,
-                    ),
-                  ),
-                  const Text(
-                    'Integrated Flutter Navigation Utility App',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
+            // Subtitle banner
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey.shade300),
               ),
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Demonstrated Navigation Concepts:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+              child: Text(
+                'Showing exactly ${_gridItems.length} items in a 2-Column GridView',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: darkBlue,
+                ),
               ),
             ),
             const SizedBox(height: 12),
-            _buildFeatureTile(
-              num: '1',
-              title: 'Basic Push & Pop',
-              subtitle: 'Navigator.push and Navigator.pop for stack screen transitions',
-            ),
-            _buildFeatureTile(
-              num: '2',
-              title: 'Named Routes',
-              subtitle: 'MaterialApp routes table and Navigator.pushNamed navigation',
-            ),
-            _buildFeatureTile(
-              num: '3',
-              title: 'Hero Animation',
-              subtitle: 'Shared element avatar animation between Home and Profile screens',
-            ),
-            _buildFeatureTile(
-              num: '4',
-              title: 'BottomNavigationBar',
-              subtitle: 'Stateful tab bar switching between Home, Tasks, Reminders, and Profile',
-            ),
-            _buildFeatureTile(
-              num: '5',
-              title: 'BottomAppBar & FAB',
-              subtitle: 'Custom bottom navigation bar with central FloatingActionButton & SnackBar',
-            ),
-            _buildFeatureTile(
-              num: '6',
-              title: 'TabBar & TabBarView',
-              subtitle: 'DefaultTabController with horizontal swiping across task categories',
-            ),
-            _buildFeatureTile(
-              num: '7',
-              title: 'Drawer & ListView',
-              subtitle: 'UserAccountsDrawerHeader sidebar drawer with quick navigation links',
-            ),
-            _buildFeatureTile(
-              num: '8',
-              title: 'Return Data from Screen',
-              subtitle: 'Selecting a task and sending data back via Navigator.pop(context, value)',
-            ),
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/contact');
-                    },
-                    icon: const Icon(Icons.email),
-                    label: const Text('Contact Us'),
-                  ),
+            // 2-Column GridView displaying exactly 6 items
+            Expanded(
+              child: GridView.builder(
+                itemCount: _gridItems.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // 2 columns
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 1.1,
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/help');
-                    },
-                    icon: const Icon(Icons.help),
-                    label: const Text('Help & FAQ'),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue.shade700,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
+                itemBuilder: (context, index) {
+                  final item = _gridItems[index];
+                  return Card(
+                    elevation: 0,
+                    color: Colors.grey.shade100,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Tapped: ${item['title']}'),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                item['icon'] as IconData,
+                                color: darkBlue,
+                                size: 30,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              item['title'] as String,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              item['caption'] as String,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.grey.shade700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                 },
-                icon: const Icon(Icons.arrow_back),
-                label: const Text('Back to Previous Screen'),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildFeatureTile({
-    required String num,
-    required String title,
-    required String subtitle,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            radius: 14,
-            backgroundColor: Colors.blue.shade700,
-            child: Text(
-              num,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
