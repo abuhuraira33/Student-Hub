@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome, Alex Morgan! 👋',
+                            'Welcome, Abu Huraira! 👋',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
 
             // Navigation Section Header
             const Text(
-              'Assignment #2 Navigation Options',
+              'Navigation Options',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

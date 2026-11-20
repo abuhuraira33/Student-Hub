@@ -19,8 +19,8 @@ class Student {
 
   static const Student currentStudent = Student(
     id: 'STU-2026-8942',
-    name: 'Alex Morgan',
-    email: 'alex.morgan@student.edu',
+    name: 'Abu Huraira',
+    email: 'abu.huraira@student.edu',
     major: 'Computer Science',
     year: 'Senior (Year 4)',
     gpa: 3.85,

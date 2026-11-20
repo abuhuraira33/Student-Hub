@@ -1,111 +1,94 @@
-import 'package:flutter/material.dart';
-import '../widgets/app_drawer.dart';
 
-// List Screen - Displays a scrollable ListView of cities
+import 'package:flutter/material.dart';
+
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
 
-  static const Color darkBlue = Color(0xFF0D47A1);
-
-  // List of at least 10 city names with country details
-  final List<Map<String, String>> _cities = const [
-    {'city': 'Tokyo', 'country': 'Japan'},
-    {'city': 'Paris', 'country': 'France'},
-    {'city': 'New York', 'country': 'United States'},
-    {'city': 'London', 'country': 'United Kingdom'},
-    {'city': 'Sydney', 'country': 'Australia'},
-    {'city': 'Cairo', 'country': 'Egypt'},
-    {'city': 'Toronto', 'country': 'Canada'},
-    {'city': 'Rome', 'country': 'Italy'},
-    {'city': 'Dubai', 'country': 'United Arab Emirates'},
-    {'city': 'Singapore', 'country': 'Singapore'},
-    {'city': 'Berlin', 'country': 'Germany'},
-    {'city': 'Istanbul', 'country': 'Turkey'},
+  final List<Map<String, String>> cities = const [
+    {'name': 'Cairo', 'country': 'Egypt'},
+    {'name': 'Toronto', 'country': 'Canada'},
+    {'name': 'Rome', 'country': 'Italy'},
+    {'name': 'Dubai', 'country': 'United Arab Emirates'},
+    {'name': 'Singapore', 'country': 'Singapore'},
+    {'name': 'Berlin', 'country': 'Germany'},
+    {'name': 'Istanbul', 'country': 'Turkey'},
+    {'name': 'Islamabad', 'country': 'Pakistan'},
+    {'name': 'London', 'country': 'United Kingdom'},
+    {'name': 'Paris', 'country': 'France'},
+    {'name': 'Tokyo', 'country': 'Japan'},
+    {'name': 'New York', 'country': 'United States'},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      // AppBar with Dark Blue theme
+      backgroundColor: Colors.grey[100],
+
       appBar: AppBar(
-        title: const Text('City List Screen'),
-        backgroundColor: darkBlue,
-        foregroundColor: Colors.white,
+        title: const Text(
+          'City List Screen',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF174EA6),
+        centerTitle: true,
       ),
-      // Drawer Navigation
-      drawer: const AppDrawer(),
+
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header info banner
-          Container(
-            width: double.infinity,
-            color: Colors.grey.shade100,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          const Padding(
+            padding: EdgeInsets.all(12),
             child: Text(
-              'Showing ${_cities.length} Major Cities (Scrollable ListView)',
-              style: const TextStyle(
+              'Showing 12 Major Cities (Scrollable ListView)',
+              style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: darkBlue,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF174EA6),
               ),
             ),
           ),
-          const Divider(height: 1),
-          // Scrollable ListView displaying city items
+
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.all(12.0),
-              itemCount: _cities.length,
+              itemCount: cities.length,
               itemBuilder: (context, index) {
-                final item = _cities[index];
                 return Card(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 0,
+                  ),
                   elevation: 0,
-                  color: Colors.grey.shade100,
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: Colors.grey.shade300),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
                   ),
                   child: ListTile(
-                    leading: CircleAvatar(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 5,
+                    ),
+
+                    leading: const CircleAvatar(
                       backgroundColor: Colors.white,
                       child: Icon(
                         Icons.location_city,
-                        color: darkBlue,
-                        size: 22,
+                        color: Color(0xFF174EA6),
                       ),
                     ),
+
                     title: Text(
-                      item['city']!,
+                      cities[index]['name']!,
                       style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
+
                     subtitle: Text(
-                      item['country']!,
-                      style: TextStyle(
+                      cities[index]['country']!,
+                      style: const TextStyle(
                         fontSize: 13,
-                        color: Colors.grey.shade700,
+                        color: Colors.grey,
                       ),
                     ),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 14,
-                      color: Colors.grey,
-                    ),
-                    onTap: () {
-                      // Display simple SnackBar on item tap
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Selected City: ${item['city']}, ${item['country']}'),
-                          duration: const Duration(seconds: 1),
-                        ),
-                      );
-                    },
                   ),
                 );
               },
